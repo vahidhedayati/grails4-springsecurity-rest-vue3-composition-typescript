@@ -5,6 +5,7 @@ import Logout from '../components/auth/Logout.vue'
 import Profile from '../components/account/Profile.vue'
 import store from '../store';
 import { UserRole } from '../types/user';
+import Country from '../components/Country.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,6 +30,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Profile,
     meta: {
       role: UserRole.UserEditor
+    }
+  },
+  {
+    path: '/country',
+    name: 'Country',
+    component: Country,
+    meta: {
+      roles: [UserRole.UserEditor, UserRole.user, UserRole.admin, UserRole.driver]
     }
   },
   {

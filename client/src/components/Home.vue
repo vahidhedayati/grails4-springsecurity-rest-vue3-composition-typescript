@@ -46,6 +46,9 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'Country' }">Countries</router-link>
+            </li>
           </span>
           <span v-else>
             <li>
