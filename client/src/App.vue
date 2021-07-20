@@ -1,28 +1,16 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    
-    <span v-if="isAuthenticated">
-       <router-link   to="/profile" >
-      <button class="btn btn-xs btn-danger">Profile</button>
-     </router-link>
-
-     
-      <router-link to="/logout">Logout</router-link>
-    </span>
-    <span v-else>
-      <router-link to="/login">Login</router-link>
-    </span>
-  </div>
-
+  <app-header></app-header>
   <router-view />
 </template>
 
 <script lang="ts">
-import { defineComponent,computed } from "vue";
+import { defineComponent, computed } from "vue";
+import AppHeader from "./components/AppHeader.vue";
 import store from "./store";
 export default defineComponent({
+  components: {
+    AppHeader,
+  },
   setup() {
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
     return {
@@ -53,4 +41,5 @@ export default defineComponent({
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+@import "~bootstrap/dist/css/bootstrap.css";
 </style>
