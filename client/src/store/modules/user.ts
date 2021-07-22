@@ -5,6 +5,7 @@ import { UserRole } from '../../types/user';
 import { ProfileState, MainState } from "@/types/profile";
 
 export const state: VuexData = {
+  id: undefined,
   jwt: undefined,
   refreshToken: undefined,
   username: undefined,

@@ -15,26 +15,34 @@
             >
             </span>
           </th>
-          <th @click="sort('name')" :class="{ active: state.column === 'name' }">
+          <th
+            @click="sort('name')"
+            :class="{ active: state.column === 'name' }"
+          >
             Name
             <span
               :class="{
                 blank: state.column != 'name',
                 arrow: state.column === 'name',
                 asc: state.column === 'name' && state.currentSortDir === 'asc',
-                desc: state.column === 'name' && state.currentSortDir === 'desc',
+                desc:
+                  state.column === 'name' && state.currentSortDir === 'desc',
               }"
             >
             </span>
           </th>
-          <th @click="sort('code')" :class="{ active: state.column === 'code' }">
+          <th
+            @click="sort('code')"
+            :class="{ active: state.column === 'code' }"
+          >
             Code
             <span
               :class="{
                 blank: state.column != 'code',
                 arrow: state.column === 'code',
                 asc: state.column === 'code' && state.currentSortDir === 'asc',
-                desc: state.column === 'code' && state.currentSortDir === 'desc',
+                desc:
+                  state.column === 'code' && state.currentSortDir === 'desc',
               }"
             >
             </span>
@@ -49,7 +57,8 @@
                 blank: state.column != 'updateUser',
                 arrow: state.column === 'updateUser',
                 asc:
-                  state.column === 'updateUser' && state.currentSortDir === 'asc',
+                  state.column === 'updateUser' &&
+                  state.currentSortDir === 'asc',
                 desc:
                   state.column === 'updateUser' &&
                   state.currentSortDir === 'desc',
@@ -107,37 +116,39 @@ import { defineComponent, reactive, PropType } from "vue";
 import { CountryObject } from "@/types/country";
 import TableRow from "./TableRow.vue";
 import DisplayCountryModal from "./DisplayCountryModal.vue";
-//type  SortSearchInterface = (currentSort: string, currentSortDir: string) => void
+//type SortSearchInterface = (
+// currentSort: string,
+// currentSortDir: string
+//) => void;
 
 export default defineComponent({
   props: {
     countries: {
-      type: Object as  PropType<CountryObject[]>
-    }, 
+      type: Object as PropType<CountryObject[]>,
+    },
     //sortSearch: {
-      //type: Function as PropType<(currentSort: string, currentSortDir: string)=> void>
-     // type: Function as PropType<SortSearchInterface>|undefined 
-   // }
-   //sortSearch:  Function as PropType<SortSearchInterface>
+    //type: Function as PropType<(currentSort: string, currentSortDir: string)=> void>
+    // type: Function as PropType<SortSearchInterface>|undefined
+    // }
+    ///sortSearch: Function as PropType<SortSearchInterface>,
   },
   components: {
     TableRow,
     DisplayCountryModal,
   },
-  setup(props,context) {
-    let state = reactive ({
+  setup(props, context) {
+    let state = reactive({
       updatedResults: null,
-      currentShowCountry: {} as CountryObject|undefined,
+      currentShowCountry: {} as CountryObject | undefined,
       currentSort: "contractName",
       currentSortDir: "asc",
       column: "id",
       activeColumn: "id",
       currentStyle: "",
       showModal: false,
-    })
-      
-    
-    const sort= function (s:string) {
+    });
+
+    const sort = function (s: string) {
       state.column = s;
       state.activeColumn = s;
       //if s == current sort, reverse
@@ -147,38 +158,50 @@ export default defineComponent({
       state.currentSort = s;
 
       //This is full on search and sortedSearch sits in the parent page Custom.vue
-      //TODO - props function PropType causing issues with call below 
-     // props.sortSearch(s, state.currentSortDir);
-     
-     context.emit('sort-search', {currentSort: s, currentSortDir: state.currentSortDir})
-    }
-    const updateCountries= function (country: CountryObject) {
+      //TODO - props function PropType causing issues with call below
+      //TODO - Cannot invoke an object which is possibly 'undefined'.Vetur(2722)
+      //props.sortSearch(s, state.currentSortDir);
+
+      context.emit("sort-search", {
+        currentSort: s,
+        currentSortDir: state.currentSortDir,
+      });
+    };
+    const updateCountries = function (country: CountryObject) {
       console.log("countryTable.vue updating country list");
       context.emit("country-update", country);
-    }
-    const showCountry=function (country:CountryObject) {
+    };
+    const showCountry = function (country: CountryObject) {
       //This is when the tableRow returned current current to be displayed - this updates the internal country
       //of this page to be that.
       state.currentShowCountry = country;
       state.showModal = true;
       //
-    }
-  const closeModalPopup= function () {
+    };
+    const closeModalPopup = function () {
       state.showModal = false;
       state.currentShowCountry = undefined;
-    }
-   const  refreshCountries= () => {
+    };
+    const refreshCountries = () => {
       console.log("countryTable.vue refresh country list");
       context.emit("refresh-list");
-    }
-    const errorCountries= function (errors:string[]) {
+    };
+    const errorCountries = function (errors: string[]) {
       console.log("countryTable.vue updating country list");
       context.emit("country-errors", errors);
-    }
+    };
 
-    return {errorCountries, refreshCountries, closeModalPopup, showCountry, updateCountries, sort, state}
-  }
-  })
+    return {
+      errorCountries,
+      refreshCountries,
+      closeModalPopup,
+      showCountry,
+      updateCountries,
+      sort,
+      state,
+    };
+  },
+});
 </script>
 
 <style>

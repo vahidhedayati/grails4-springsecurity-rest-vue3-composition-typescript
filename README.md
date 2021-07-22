@@ -5,20 +5,26 @@
 ###### Backend is a copy of grails 3 site all the core work is going to be front end changes So far authentication works and profile loads up - will be working on getting similar functionality as the older project
 
 
-### Side note - similar / related projects
-- [micronaut-vuejs-cqrs](https://github.com/vahidhedayati/micronaut-vuejs-cqrs)
-
-- [micronaut-vuejs-crud](https://github.com/vahidhedayati/micronaut-vuejs-crud)
-
-- [grails-vue-springsecurity-demo (this)](https://github.com/vahidhedayati/grails-vue-springsecurity-demo)
-
-- [micronaut-ms micronaut beer serving app](https://github.com/vahidhedayati/micronaut-ms)
-
+###[Youtube video](https://www.youtube.com/watch?v=jnftiOPsrFg)
 
 To run this application
 ```
 ./gradlew bootRun --parallel
 ``` 
+
+I run each manually 
+
+Client 
+```
+npm run serve
+
+```
+
+Server :
+```
+grails run-app
+```
+
 
 
 This will launch both apps and access url via 
