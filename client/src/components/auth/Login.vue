@@ -85,7 +85,7 @@ export default defineComponent({
     const onSubmit = async () => {
       const res = await fetcher<LoginResponse>(
         "POST",
-        "http://localhost:8080/api/login",
+        "/api/login",
         {
           username: form.username,
           password: form.password,
@@ -100,11 +100,12 @@ export default defineComponent({
         const jwt = res.data.access_token;
         const refreshToken = res.data.refresh_token;
         const roles = res.data.roles;
-
+        const id = res.data.id;
+        
         const username = form.username;
-        await store.dispatch("login", { jwt, refreshToken, username, roles });
+        await store.dispatch("login", { id, jwt, refreshToken, username, roles });
 
-        getProfile(res.data.id);
+        getProfile(id);
 
         router.push({ name: "Home", query: { ...route.query } });
       }

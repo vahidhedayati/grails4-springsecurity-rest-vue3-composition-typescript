@@ -5,7 +5,7 @@ import Logout from '../components/auth/Logout.vue'
 import Profile from '../components/account/Profile.vue'
 import store from '../store';
 import { UserRole } from '../types/user';
-import Country from '../components/Country.vue'
+import Country from '../components/country/Country.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {

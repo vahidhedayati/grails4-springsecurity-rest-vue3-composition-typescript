@@ -16,6 +16,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/index.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
+	[pattern: '/h2-console/**',      access: ['permitAll']],
+	[pattern: '/h2-console',      access: ['permitAll']],
 
 	//Anything starting with /guest will bypass spring security checks - non authenticated access
 	[pattern: '/guest/**',       access: ['permitAll']],
@@ -42,6 +44,8 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 		[pattern: '/**/favicon.ico', filters: 'none'],
 		[pattern: '/vehicle/export', filters: 'none'],
 		[pattern: '/oauth/access_token', filters: 'none'],
+		[pattern: '/h2-console/**', filters: 'none'],
+		[pattern: '/h2-console', filters: 'none'],
 
 		[pattern: '/guest/**', filters: 'none'],
 

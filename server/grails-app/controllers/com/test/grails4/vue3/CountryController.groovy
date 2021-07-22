@@ -21,14 +21,14 @@ class CountryController {
     MessageSource messageSource
 
     def index(){
-
         CountrySearchBean bean = new CountrySearchBean()
+        //println "country/index = search --->-- params = ${params} vs ${request.JSON}"
         DataBindingUtils.bindObjectToInstance(bean, params)
         bean.validate()
         if (!bean.hasErrors()) {
             def results = countryService.search(bean)
             results.numberOfPages=(results.instanceTotal/bean.max).intValue()+1
-            println " number of pages =  ${results.numberOfPages} ${results.instanceTotal} vs ${results.max} "
+            //println " number of pages =  ${results.numberOfPages} ${results.instanceTotal} vs ${results.max} "
             render results as JSON
             //return
         }
@@ -58,8 +58,10 @@ class CountryController {
     }
 
     def save() {
-        println " $params.id is id in question"
+        println " $params.id is id in question ${params}"
         def jsonParams = request.JSON
+           println " $jsonParams.id is id in question ${jsonParams}"
+        
         CountryBean bean = new CountryBean()
         DataBindingUtils.bindObjectToInstance(bean, jsonParams)
         if (!bean.code) {
@@ -71,6 +73,7 @@ class CountryController {
         bean.validate()
         try {
             if (!bean.hasErrors()) {
+                println "-- saving country"
                 def c  = countryService.save(bean)
                 if (c) {
                     println "aved it"

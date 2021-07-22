@@ -9,7 +9,10 @@ class CountryService {
     @Transactional
     def save(CountryBean bean)  {
         Country country = Country.bindBean(bean)
-        return  country.save(flush:true)
+        if (!country.save(flush:true)) {
+            println "-- ${country.errors.allErrors}"
+        }
+        return  country
     }
 
     @Transactional
@@ -48,11 +51,11 @@ class CountryService {
                                 c.lastUpdated as lastUpdated,
                                 c.name as name,
                                 c.code as code,
-                                c.updateUser as updateUser
+                                u as updateUser
                                 
                                 
                           )
-                from Country c
+                from Country c left join c.updateUser u
             """
 
 
@@ -69,11 +72,12 @@ class CountryService {
         } else {
             query += " order by c.lastUpdated $bean.order"
         }
-        println "-- $query == ${whereParams}"
-        def results = VehicleContract.executeQuery(query, whereParams, metaParams)
+      
+        def results = Country.executeQuery(query, whereParams, metaParams)
+        //println "-- $query == ${whereParams} -- ${results}"
         int total = results.size()
         if (total >= metaParams.max) {
-            total = VehicleContract.executeQuery("select count(*) from  Country c "+where, whereParams, [readOnly: true, timeout: 15, max: 1])[0]
+            total = Country.executeQuery("select count(*) from  Country c "+where, whereParams, [readOnly: true, timeout: 15, max: 1])[0]
         } else {
             total += metaParams.offset as Long
         }

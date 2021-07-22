@@ -1,11 +1,11 @@
 import axios, { Method } from 'axios';
 import store from '../store';
-import { Headers } from '../types/fetcher';
-
+import { Headers, Response } from '../types/fetcher';
 export default async function fetcher<TResult>(method: Method, url: string, data?: unknown): Promise<Response<TResult>> {
 
   const jwt: string | undefined = store.state.jwt;
 
+  const backend: string |undefined = 'http://localhost:8080'
   const headers: Headers = {
     'Content-Type': 'application/json; charset=utf-8'
   };
@@ -14,10 +14,11 @@ export default async function fetcher<TResult>(method: Method, url: string, data
     headers.Authorization = 'Bearer ' + jwt;
   }
 
+  const currentUrl = backend ? backend+url : url
   const res = await axios({
     headers,
     method,
-    url,
+    url:currentUrl,
     data,
     validateStatus: () => true // don't throw on non-200
   });
@@ -30,9 +31,4 @@ export default async function fetcher<TResult>(method: Method, url: string, data
   } as Response<TResult>;
 }
 
-export interface Response<TResult> {
-  ok: boolean;
-  status: number;
-  headers: unknown;
-  data: TResult | undefined;
-}
+

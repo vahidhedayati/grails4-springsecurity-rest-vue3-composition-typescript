@@ -41,5 +41,46 @@ export default defineComponent({
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.errors,
+.message {
+  font-size: 0.8em;
+  line-height: 2;
+  margin: 1em 2em;
+  padding: 0.25em;
+}
+
+.message {
+  background: #f3f3ff;
+  border: 1px solid #b2d1ff;
+  color: #006dba;
+  -moz-box-shadow: 0 0 0.25em #b2d1ff;
+  -webkit-box-shadow: 0 0 0.25em #b2d1ff;
+  box-shadow: 0 0 0.25em #b2d1ff;
+}
+
+.errors {
+  background: #fff3f3;
+  border: 1px solid #ffaaaa;
+  color: #cc0000;
+  -moz-box-shadow: 0 0 0.25em #ff8888;
+  -webkit-box-shadow: 0 0 0.25em #ff8888;
+  box-shadow: 0 0 0.25em #ff8888;
+}
+
+.errors ul,
+.message {
+  padding: 0;
+}
+
+.errors li {
+  list-style: none;
+
+  text-indent: 2.2em;
+}
+
+.message {
+  text-indent: 2.2em;
+}
 @import "~bootstrap/dist/css/bootstrap.css";
 </style>

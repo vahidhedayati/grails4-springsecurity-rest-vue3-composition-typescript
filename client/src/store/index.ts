@@ -4,6 +4,7 @@ import { UserRole } from '../types/user';
 import { profile } from './modules/profile'
 
 const defaultState: VuexData = {
+  id: undefined,
   jwt: undefined,
   refreshToken: undefined,
   username: undefined,
@@ -14,13 +15,15 @@ export default createStore({
   state: defaultState,
   actions: {
     login(context: ActionContext<VuexData, VuexData>, args: LoginData) {
-      const { jwt, refreshToken, username, roles } = args;
+      const { id, jwt, refreshToken, username, roles } = args;
       if (jwt) {
+        context.commit('id', id);
         context.commit('jwt', jwt);
         context.commit('rjwt', refreshToken);
         context.commit('username', username);
         context.commit('roles', roles || []);
       } else {
+        context.commit('id', undefined);
         context.commit('jwt', undefined);
         context.commit('rjwt', undefined);
         context.commit('username', undefined);
@@ -28,6 +31,7 @@ export default createStore({
       }
     },
     logout(context: ActionContext<VuexData, VuexData>) {
+      context.commit('id', undefined);
       context.commit('jwt', undefined);
       context.commit('rjwt', undefined);
       context.commit('username', undefined);
@@ -35,6 +39,9 @@ export default createStore({
     }
   },
   mutations: {
+    id: (state: VuexData, id: string | undefined) => {
+      state.id = id;
+    },
     jwt: (state: VuexData, jwt: string | undefined) => {
       state.jwt = jwt;
     },
@@ -57,6 +64,5 @@ export default createStore({
   },
   modules: {
     profile
-
   }
 })

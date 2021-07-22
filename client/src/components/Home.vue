@@ -21,42 +21,39 @@
             <router-link class="nav-link" to="/about">About</router-link>
           </li>
 
-          <span v-if="isAuthenticated">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                {{ profileDetails.username }}
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <router-link class="dropdown-item" to="/profile">
-                    Profile
-                  </router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/logout"
-                    >Logout</router-link
-                  >
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'Country' }">Countries</router-link>
-            </li>
-          </span>
-          <span v-else>
-            <li>
-              <router-link class="nav-link active" to="/login"
-                >Login</router-link
-              >
-            </li>
-          </span>
+          <li v-if="isAuthenticated" class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'Country' }"
+              >Countries</router-link
+            >
+          </li>
+          <li v-if="isAuthenticated" class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ profileDetails.username }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <router-link class="dropdown-item" to="/profile">
+                  Profile
+                </router-link>
+              </li>
+              <li>
+                <router-link class="dropdown-item" to="/logout"
+                  >Logout</router-link
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li v-if="!isAuthenticated">
+            <router-link class="nav-link" to="/login">Login</router-link>
+          </li>
         </ul>
       </div>
     </div>
