@@ -116,20 +116,21 @@ import { defineComponent, reactive, PropType } from "vue";
 import { CountryObject } from "@/types/country";
 import TableRow from "./TableRow.vue";
 import DisplayCountryModal from "./DisplayCountryModal.vue";
-//type SortSearchInterface = (
-// currentSort: string,
-// currentSortDir: string
-//) => void;
+type SortSearchInterface = (
+  currentSort: string,
+  currentSortDir: string
+) => void;
 
 export default defineComponent({
   props: {
     countries: {
       type: Object as PropType<CountryObject[]>,
     },
-    //sortSearch: {
-    //type: Function as PropType<(currentSort: string, currentSortDir: string)=> void>
-    // type: Function as PropType<SortSearchInterface>|undefined
-    // }
+    sortSearch: {
+      //type: Function as PropType<(currentSort: string, currentSortDir: string)=> void>
+      type: Function as PropType<SortSearchInterface>,
+      required: true,
+    },
     ///sortSearch: Function as PropType<SortSearchInterface>,
   },
   components: {
@@ -160,12 +161,13 @@ export default defineComponent({
       //This is full on search and sortedSearch sits in the parent page Custom.vue
       //TODO - props function PropType causing issues with call below
       //TODO - Cannot invoke an object which is possibly 'undefined'.Vetur(2722)
-      //props.sortSearch(s, state.currentSortDir);
+      props.sortSearch(s, state.currentSortDir);
 
-      context.emit("sort-search", {
+      /* context.emit("sort-search", {
         currentSort: s,
         currentSortDir: state.currentSortDir,
       });
+      */
     };
     const updateCountries = function (country: CountryObject) {
       console.log("countryTable.vue updating country list");
